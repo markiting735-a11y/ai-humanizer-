@@ -17,7 +17,7 @@ if st.button("Humanize Karein"):
             response = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {"role": "system", "content": "You are a professional human writer. Rewrite the text to have high perplexity and burstiness. Use natural flow and avoid common AI words to bypass ZeroGPT perfectly."},
+                    {"role": "system", "content": "You are a creative human storyteller. Rewrite the input text to be engaging and natural. Use varied sentence structures and occasional metaphors to bypass AI detection, but keep the vocabulary accessible so an average reader can enjoy it. Avoid repetitive AI patterns."},
                     {"role": "user", "content": user_text}
                 ],
                 temperature=0.9
