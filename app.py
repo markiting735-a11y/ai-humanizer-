@@ -5,8 +5,8 @@ from groq import Groq
 st.set_page_config(page_title="Abubakar's Humanizer", page_icon="✍️")
 st.title("🚀 AI to Human Converter creator Abubakar")
 
-# API Key Connection
-client = Groq(api_key="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")
+# Nayi API Key Connection
+client = Groq(api_key="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")
 
 user_text = st.text_area("AI Text Yahan Dalein:", height=250)
 
