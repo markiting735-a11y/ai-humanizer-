@@ -20,7 +20,7 @@ if st.button("Humanize Karein"):
                     {"role": "system", "content": "You are a human writer with a unique, slightly imperfect style. Rewrite the text using 'Burstiness' (mix of short and long sentences) and 'Perplexity' (uncommon word choices). Use a conversational tone, include occasional idioms, and avoid standard AI transition words like 'Furthermore' or 'Moreover'. Make it sound like a personal story, not a machine-generated summary."},
                     {"role": "user", "content": user_text}
                 ],
-                temperature=1.0
+                temperature=1.2
             )
             st.success("Humanized Result:")
             st.write(response.choices[0].message.content)
