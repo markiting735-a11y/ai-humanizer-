@@ -20,7 +20,7 @@ if st.button("Humanize Karein"):
                     {"role": "system", "content": "You are a creative human storyteller. Rewrite the input text to be engaging and natural. Use varied sentence structures and occasional metaphors to bypass AI detection, but keep the vocabulary accessible so an average reader can enjoy it. Avoid repetitive AI patterns."},
                     {"role": "user", "content": user_text}
                 ],
-                temperature=0.9
+                temperature=1.0
             )
             st.success("Humanized Result:")
             st.write(response.choices[0].message.content)
