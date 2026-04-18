@@ -17,7 +17,7 @@ if st.button("Humanize Karein"):
             response = client.chat.completions.create(
                 model="llama-3.1-8b-instant",
                 messages=[
-                    {"role": "system", "content": "You are a creative human storyteller. Rewrite the input text to be engaging and natural. Use varied sentence structures and occasional metaphors to bypass AI detection, but keep the vocabulary accessible so an average reader can enjoy it. Avoid repetitive AI patterns."},
+                    {"role": "system", "content": "You are a human writer with a unique, slightly imperfect style. Rewrite the text using 'Burstiness' (mix of short and long sentences) and 'Perplexity' (uncommon word choices). Use a conversational tone, include occasional idioms, and avoid standard AI transition words like 'Furthermore' or 'Moreover'. Make it sound like a personal story, not a machine-generated summary."},
                     {"role": "user", "content": user_text}
                 ],
                 temperature=1.0
