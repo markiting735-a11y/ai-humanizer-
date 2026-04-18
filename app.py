@@ -15,7 +15,7 @@ if st.button("Humanize Karein"):
     if user_text:
         with st.spinner('Thinking like a human...'):
             response = client.chat.completions.create(
-                model="llama3-70b-8192",
+                model="llama3-8b-8192",
                 messages=[
                     {"role": "system", "content": "You are a professional human writer. Rewrite the text to have high perplexity and burstiness. Use natural flow and avoid common AI words to bypass ZeroGPT perfectly."},
                     {"role": "user", "content": user_text}
