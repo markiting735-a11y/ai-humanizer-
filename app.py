@@ -4,20 +4,19 @@ from groq import Groq
 # 1. Page Configuration
 st.set_page_config(page_title="Abubakar's AI Studio", page_icon="🚀", layout="centered")
 
-# Custom CSS for better look
+# CSS Fix: unsafe_allow_html use karna tha
 st.markdown("""
     <style>
     .main { background-color: #f0f2f6; }
     stTextArea textarea { font-size: 16px !important; }
     </style>
-    """, unsafe_allow_stdio=True)
+    """, unsafe_allow_html=True)
 
 st.title("🤖 Abubakar's Multi-Mood Humanizer")
 st.markdown("Is tool se aap AI text ko 0% detection level par la sakte hain.")
 st.markdown("---")
 
 # 2. API Key Setup
-# Note: Apni key hamesha secure rakhein
 client = Groq(api_key="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")
 
 # 3. Sidebar for Settings
@@ -77,4 +76,3 @@ if st.button("✨ Humanize & Generate"):
 
 st.markdown("---")
 st.caption("Developed with 🔥 by Abubakar | Class 11 CS Student")
-                
