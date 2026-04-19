@@ -2,10 +2,10 @@ import streamlit as st
 from groq import Groq
 import random
 
-# 1. Page Configuration (Wide layout for mobile & desktop)
-st.set_page_config(page_title="Abubakar's Humanizer Pro", page_icon="🚀", layout="wide")
+# 1. Page Configuration
+st.set_page_config(page_title="Abubakar's Humanizer 🔥Pro", page_icon="🚀", layout="wide")
 
-# CSS: Mobile friendly UI, Line Wrap, aur Professional Look
+# CSS: Mobile friendly UI aur Text Wrap fix
 st.markdown("""
     <style>
     .stTextArea textarea { font-size: 16px !important; color: #ffffff !important; background-color: #1e1e1e !important; }
@@ -14,53 +14,55 @@ st.markdown("""
         color: #e0e0e0;
         padding: 20px;
         border-radius: 12px;
-        border: 2px solid #4CAF50;
+        border: 2px solid #ff4b4b;
         font-family: 'Georgia', serif;
         white-space: pre-wrap;
         margin-top: 15px;
         margin-bottom: 15px;
-        line-height: 1.6;
+        line-height: 1.7;
     }
     </style>
     """, unsafe_allow_html=True)
 
 st.title("🤖 Abubakar's Writing Studio")
-st.caption("Advanced Humanization Engine for Fiction & Authors")
+st.caption("ULTRA-STEALTH MODE: Designed for Zero AI Detection")
 
 # 2. API Key Setup
 client = Groq(api_key="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")
 
-st.subheader("⚙️ Settings")
-mood = st.selectbox("Style Select Karein (Tone):", 
+st.subheader("⚙️ Configuration")
+mood = st.selectbox("Style Select Karein:", 
                     ["Super Human (Casual/Story)", "Professional (Book/Thriller)"])
 
-st.markdown("---")
-
 # 3. Input Area
-user_text = st.text_area("Original AI Text Yahan Paste Karein:", height=250, placeholder="Apni story ka chapter yahan paste karein...")
+user_text = st.text_area("AI Text Yahan Paste Karein:", height=250, placeholder="Write your chapter here...")
 
-# 4. Logic & Randomization (For 0% Detection)
-random_factor = random.uniform(0.01, 0.20) 
+# 4. Chaos & Randomization Logic
+random_factor = random.uniform(0.05, 0.25) 
 
 if mood == "Super Human (Casual/Story)":
-    system_prompt = "You are a human writer. Use slang, messy conversational style, filler words (like, literally, I mean), and occasional typos. Break every robotic pattern. Sound like a person telling a story to a friend."
-    base_temp = 1.35 + random_factor
+    system_prompt = "You are a messy human storyteller. Use slang, 'uhm', 'like', 'literally', and occasional typos. Break every rule of writing. Sound like a chaotic person on a voice note."
+    base_temp = 1.4 + random_factor
 else:
-    # GOD-LEVEL WRITER PROMPT (Anti-Detector)
-    system_prompt = """You are a master human novelist. Rewrite the input to be 100% indistinguishable from human writing.
+    # ULTRA-HUMAN NOVELIST PROMPT (Anti-Detector)
+    system_prompt = """You are a rebellious, emotional human novelist. 
+    Your mission: Rewrite the text so it's 100% IMPOSSIBLE to detect as AI.
     
-    CRITICAL INSTRUCTIONS:
-    1. VARY RHYTHM: Mix very short, punchy sentences with long, descriptive ones. Use fragments.
-    2. SHOW, DON'T TELL: Use sensory details (smell, taste, touch, sound). Don't say 'he was scared', say 'his palms were slick with cold sweat'.
-    3. INTERNAL VOICE: Include internal thoughts, rhetorical questions, and human-like hesitations.
-    4. NO ROBOT WORDS: Absolutely NO: 'delve', 'testament', 'labyrinth', 'multifaceted', 'embark', 'intricate', 'furthermore'.
-    5. FLOW: Start some sentences with 'And', 'But', or 'Or'. Use dashes (-) and ellipses (...) to show human thought flow."""
-    base_temp = 1.25 + random_factor
+    CRITICAL STRATEGY:
+    1. JAGGED RHYTHM: Use 'Burstiness'. Some sentences should be one word. Others should be long and breathless.
+    2. HUMAN FLAWS: Start sentences with 'And', 'But', or 'Because'. Use fragments. (e.g., 'A cold night. Too cold.')
+    3. SENSORY OVERLOAD: Describe physical sensations—the metallic tang of blood, the itch of a wool sweater, the way a heart stutters.
+    4. NO AI WORDS: Strictly ban: 'delve', 'testament', 'labyrinth', 'shrouded', 'unbeknownst', 'intricate', 'multifaceted'.
+    5. INTERNAL CHAOS: Use ellipses (...) and dashes (-) to show a character's messy thought process. 
+    If a sentence feels too perfect, break it. Sound raw, tired, and real."""
+    
+    # Temperature high rakha hai taake prediction zero ho jaye
+    base_temp = 1.35 + random_factor
 
 # 5. Process Button
-if st.button("✨ Humanize & Generate"):
+if st.button("✨ Humanize & Destroy AI Patterns"):
     if user_text:
-        with st.spinner('Crafting a unique human masterpiece...'):
+        with st.spinner('Evading AI Detectors...'):
             try:
                 response = client.chat.completions.create(
                     model="llama-3.1-8b-instant",
@@ -74,23 +76,20 @@ if st.button("✨ Humanize & Generate"):
                 result = response.choices[0].message.content
                 
                 # Output Section
-                st.subheader("✅ Humanized Result:")
-                
-                # Box 1: Professional Reading View (Wrapped for Mobile)
+                st.subheader("✅ Humanized Masterpiece:")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 
-                # Box 2: Easy Copy Section
-                st.write("📋 **Neechay box ke top-right se copy karein:**")
+                st.write("📋 **Copy from the box below:**")
                 st.code(result, language=None)
                 
-                # Metrics
+                # Word Counter
                 word_count = len(result.split())
-                st.info(f"📊 Word Count: {word_count} | 🛡️ Detection Shield: Active")
+                st.info(f"📊 Word Count: {word_count} | 🛡️ Stealth Level: Maximum")
                 
             except Exception as e:
                 st.error(f"Error: {e}")
     else:
-        st.warning("Pehle kuch text toh likhein!")
+        st.warning("Pehle kuch text toh dalo!")
 
 st.markdown("---")
-st.caption("Developed by Abubakar | Perfect for Draft2Digital & KDP")
+st.caption("Developed by Abubakar | Author Edition")
