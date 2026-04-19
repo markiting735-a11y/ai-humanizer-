@@ -14,9 +14,9 @@ st.markdown("""
         color: #ffffff;
         padding: 15px;
         border-radius: 10px;
-        border: 2px solid #4CAF50;
+        border: 1px solid #4CAF50;
         font-family: sans-serif;
-        white-space: pre-wrap; /* Ye line mobile par text wrap karegi */
+        white-space: pre-wrap;
         margin-top: 10px;
         margin-bottom: 10px;
     }
@@ -34,14 +34,21 @@ mood = st.selectbox("Style Select Karein (Tone):", ["Super Human (Casual/Story)"
 user_text = st.text_area("Original AI Text Yahan Paste Karein:", height=200, placeholder="Write here...")
 
 # 3. Randomness for 0% Detection
-random_factor = random.uniform(0.01, 0.15) # Har baar naya result
+random_factor = random.uniform(0.01, 0.15) 
 
+# --- YE HAI WO TABDEELI (PROMPT LOGIC) ---
 if mood == "Super Human (Casual/Story)":
     system_prompt = "You are a human writer. Use slang, occasional typos, and a very messy conversational style. Use filler words like 'like', 'literally', 'I mean'. Break every robotic pattern."
     base_temp = 1.35 + random_factor
 else:
-    system_prompt = "You are a professional novelist. Use deep human emotions, varying sentence lengths, and natural flow. Avoid all common AI phrases. Make it sound 100% human-written."
-    base_temp = 0.85 + random_factor
+    # Naya Updated Professional Prompt
+    system_prompt = """You are a seasoned human novelist. 
+    CRITICAL: Avoid all robotic words like 'testament', 'labyrinth', 'multifaceted', 'embark'. 
+    Write with 'Burstiness': some sentences should be very short and punchy, others long and descriptive. 
+    Use deep sensory details (smell, touch, sound) and internal thoughts. 
+    Break some formal grammar rules if it makes the scene more intense. 
+    Sound like a person who is tired, emotional, or scared—not a machine."""
+    base_temp = 1.15 + random_factor 
 
 # 4. Process Button
 if st.button("✨ Humanize & Generate"):
@@ -56,13 +63,9 @@ if st.button("✨ Humanize & Generate"):
                 
                 result = response.choices[0].message.content
                 
-                # Output
                 st.subheader("✅ Humanized Result:")
-                
-                # Box 1: For Reading (Mobile Wrap)
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 
-                # Box 2: For One-Click Copy
                 st.write("📋 **Neechay box se copy karein:**")
                 st.code(result, language=None)
                 
