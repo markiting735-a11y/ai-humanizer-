@@ -27,8 +27,8 @@ st.markdown("""
 st.title("🤖 Abubakar's Writing Studio")
 st.caption("ULTRA-STEALTH MODE: Designed for Zero AI Detection")
 
-# 2. API Key Setup
-client = Groq(api_key="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")
+# 2. API Key Setup (Nayi API Key yahan update kar di gayi hai)
+client = Groq(api_key="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")
 
 st.subheader("⚙️ Configuration")
 mood = st.selectbox("Style Select Karein:", 
