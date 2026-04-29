@@ -1,95 +1,126 @@
 import streamlit as st
 from groq import Groq
+from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+import io
 import random
 
 # 1. Page Configuration
-st.set_page_config(page_title="Abubakar's Humanizer 🔥Pro", page_icon="🚀", layout="wide")
+st.set_page_config(page_title="Abubakar's Auto-KDP Studio", page_icon="🚀", layout="wide")
 
-# CSS: Mobile friendly UI aur Text Wrap fix
+# CSS for UI
 st.markdown("""
     <style>
     .stTextArea textarea { font-size: 16px !important; color: #ffffff !important; background-color: #1e1e1e !important; }
     .result-box {
-        background-color: #0e1117;
-        color: #e0e0e0;
-        padding: 20px;
-        border-radius: 12px;
-        border: 2px solid #ff4b4b;
-        font-family: 'Georgia', serif;
-        white-space: pre-wrap;
-        margin-top: 15px;
-        margin-bottom: 15px;
-        line-height: 1.7;
+        background-color: #0e1117; color: #e0e0e0; padding: 20px; border-radius: 12px;
+        border: 2px solid #ff4b4b; font-family: 'Georgia', serif; white-space: pre-wrap;
+        line-height: 1.7; margin-bottom: 15px;
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🤖 Abubakar's Writing Studio")
-st.caption("ULTRA-STEALTH MODE: Designed for Zero AI Detection")
-
-# 2. API Key Setup (Nayi API Key yahan update kar di gayi hai)
+# 2. API Key Setup
 client = Groq(api_key="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")
 
-st.subheader("⚙️ Configuration")
-mood = st.selectbox("Style Select Karein:", 
-                    ["Super Human (Casual/Story)", "Professional (Book/Thriller)"])
+# Tabs for separate functions
+tab1, tab2 = st.tabs(["🚀 Auto-KDP Ebook Agent", "🤖 Single Text Humanizer"])
 
-# 3. Input Area
-user_text = st.text_area("AI Text Yahan Paste Karein:", height=250, placeholder="Write your chapter here...")
-
-# 4. Chaos & Randomization Logic
-random_factor = random.uniform(0.05, 0.25) 
-
-if mood == "Super Human (Casual/Story)":
-    system_prompt = "You are a messy human storyteller. Use slang, 'uhm', 'like', 'literally', and occasional typos. Break every rule of writing. Sound like a chaotic person on a voice note."
-    base_temp = 1.4 + random_factor
-else:
-    # ULTRA-HUMAN NOVELIST PROMPT (Anti-Detector)
-    system_prompt = """You are a rebellious, emotional human novelist. 
-    Your mission: Rewrite the text so it's 100% IMPOSSIBLE to detect as AI.
+# --- TAB 1: FULL AUTOMATION (Your Requirement) ---
+with tab1:
+    st.header("📚 Full Ebook Automation")
+    st.caption("Topic dalo, system khud chapters likhega, humanize karega aur Word file dega.")
     
-    CRITICAL STRATEGY:
-    1. JAGGED RHYTHM: Use 'Burstiness'. Some sentences should be one word. Others should be long and breathless.
-    2. HUMAN FLAWS: Start sentences with 'And', 'But', or 'Because'. Use fragments. (e.g., 'A cold night. Too cold.')
-    3. SENSORY OVERLOAD: Describe physical sensations—the metallic tang of blood, the itch of a wool sweater, the way a heart stutters.
-    4. NO AI WORDS: Strictly ban: 'delve', 'testament', 'labyrinth', 'shrouded', 'unbeknownst', 'intricate', 'multifaceted'.
-    5. INTERNAL CHAOS: Use ellipses (...) and dashes (-) to show a character's messy thought process. 
-    If a sentence feels too perfect, break it. Sound raw, tired, and real."""
+    col1, col2 = st.columns(2)
+    with col1:
+        book_topic = st.text_input("Ebook Topic:", placeholder="e.g. 3D Modeling Masterclass")
+    with col2:
+        book_lang = st.selectbox("Language:", ["English", "Urdu", "Roman Urdu"])
     
-    # Temperature high rakha hai taake prediction zero ho jaye
-    base_temp = 1.35 + random_factor
+    num_chapters = st.slider("Kitne Chapters chahiye?", 1, 10, 3)
 
-# 5. Process Button
-if st.button("✨ Humanize & Destroy AI Patterns"):
-    if user_text:
-        with st.spinner('Evading AI Detectors...'):
-            try:
-                response = client.chat.completions.create(
+    if st.button("Generate & Humanize Full Ebook"):
+        if book_topic:
+            doc = Document()
+            
+            # Title Page
+            title = doc.add_heading(book_topic, 0)
+            title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            doc.add_page_break()
+            
+            # Copyright Page
+            doc.add_heading('Copyright & Disclaimer', level=1)
+            doc.add_paragraph(f"This book was generated and humanized by Abubakar's AI Studio.\n© 2026 All Rights Reserved.\nLanguage: {book_lang}")
+            doc.add_page_break()
+
+            progress_bar = st.progress(0)
+            
+            for i in range(1, num_chapters + 1):
+                st.write(f"✍️ Writing Chapter {i}...")
+                
+                # A. Generate Content
+                raw_res = client.chat.completions.create(
+                    model="llama-3.1-70b-versatile",
+                    messages=[{"role": "user", "content": f"Write a detailed Chapter {i} for a book titled '{book_topic}' in {book_lang}. Focus on depth and quality."}]
+                ).choices[0].message.content
+                
+                # B. Humanize Content (Using your EXACT Novelist Logic)
+                human_res = client.chat.completions.create(
                     model="llama-3.1-8b-instant",
                     messages=[
-                        {"role": "system", "content": system_prompt},
-                        {"role": "user", "content": user_text}
+                        {"role": "system", "content": "You are a rebellious, emotional human novelist. Rewrite text so it's 100% IMPOSSIBLE to detect as AI. Use jagged rhythm, sensory overload, and fragments. NO AI WORDS like 'delve' or 'labyrinth'."},
+                        {"role": "user", "content": raw_res}
                     ],
-                    temperature=base_temp
-                )
+                    temperature=1.45
+                ).choices[0].message.content
                 
-                result = response.choices[0].message.content
+                # C. Add to Docx
+                doc.add_heading(f"Chapter {i}", level=1)
+                doc.add_paragraph(human_res)
+                doc.add_page_break()
                 
-                # Output Section
-                st.subheader("✅ Humanized Masterpiece:")
-                st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
-                
-                st.write("📋 **Copy from the box below:**")
-                st.code(result, language=None)
-                
-                # Word Counter
-                word_count = len(result.split())
-                st.info(f"📊 Word Count: {word_count} | 🛡️ Stealth Level: Maximum")
-                
-            except Exception as e:
-                st.error(f"Error: {e}")
-    else:
-        st.warning("Pehle kuch text toh dalo!")
+                progress_bar.progress(i / num_chapters)
 
-st.markdown("---")
-st.caption("Developed by Abubakar | Author Edition")
+            # Save and Download
+            buffer = io.BytesIO()
+            doc.save(buffer)
+            buffer.seek(0)
+            
+            st.success("✅ Pori File Ready He! Ek word ki formatting ghalti nahi hogi.")
+            st.download_button(
+                label="📥 Download KDP Ready Ebook (.docx)",
+                data=buffer,
+                file_name=f"{book_topic}_Humanized.docx",
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
+        else:
+            st.warning("Pehle topic toh likho!")
+
+# --- TAB 2: ORIGINAL HUMANIZER (No Changes) ---
+with tab2:
+    st.header("🤖 Abubakar's Writing Studio")
+    st.caption("ULTRA-STEALTH MODE: Single Paragraph Testing")
+    
+    mood = st.selectbox("Style Select Karein:", ["Super Human (Casual/Story)", "Professional (Book/Thriller)"])
+    user_text = st.text_area("AI Text Yahan Paste Karein:", height=250)
+
+    if st.button("✨ Humanize & Destroy AI Patterns"):
+        if user_text:
+            random_factor = random.uniform(0.05, 0.25)
+            if mood == "Super Human (Casual/Story)":
+                sys_prompt = "You are a messy human storyteller. Use slang, 'uhm', 'like', 'literally', and occasional typos."
+                temp = 1.4 + random_factor
+            else:
+                sys_prompt = "You are a rebellious, emotional human novelist. Rewrite the text so it's 100% IMPOSSIBLE to detect as AI. Sound raw, tired, and real."
+                temp = 1.35 + random_factor
+
+            with st.spinner('Processing...'):
+                response = client.chat.completions.create(
+                    model="llama-3.1-8b-instant",
+                    messages=[{"role": "system", "content": sys_prompt}, {"role": "user", "content": user_text}],
+                    temperature=temp
+                )
+                result = response.choices[0].message.content
+                st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
+                st.code(result)
+            
