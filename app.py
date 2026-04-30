@@ -2,61 +2,61 @@ import streamlit as st
 from groq import Groq
 
 # 1. Page Config
-st.set_page_config(page_title="Abubakar's V17 Final Kill", page_icon="🎯", layout="wide")
+st.set_page_config(page_title="Abubakar's V18 Ultra", page_icon="🕵️‍♂️", layout="wide")
 
-# CSS: Dark Ghost Interface
+# CSS: Dark Ghost Mode
 st.markdown("""
     <style>
-    .stTextArea textarea { font-size: 18px !important; color: #ffffff !important; background-color: #111111 !important; border: 2px solid #333; }
+    .stTextArea textarea { font-size: 18px !important; color: #f0f0f0 !important; background-color: #0d1117 !important; border: 1px solid #30363d; }
     .result-box {
-        background-color: #fcfcfc; color: #111111; padding: 45px; border-radius: 5px;
-        border-left: 15px solid #000000; font-family: 'Georgia', serif; white-space: pre-wrap;
-        line-height: 1.8; font-size: 21px; 
+        background-color: #ffffff; color: #000000; padding: 40px; border-radius: 5px;
+        border-top: 20px solid #000000; font-family: 'Georgia', serif; white-space: pre-wrap;
+        line-height: 1.8; font-size: 20px; box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🎯 V17.0 The Final Kill (Zero-AI Signature)")
-st.caption("Strategy: Dynamic Rhythm | Sensory Grit | No Robot Words")
+st.title("🕵️‍♂️ Ghost Writer Ultra V18.0")
+st.caption("Status: Maximum Stealth | Mode: Human Jitter + Conversational Grit")
 
 # 2. API Key
 client = Groq(api_key="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")
 
 # 3. Input
-user_text = st.text_area("Original AI Text Dalein:", height=200)
+user_text = st.text_area("Original AI Garbage Here:", height=200)
 
-# 4. The "Executioner" Prompt
-executioner_prompt = """You are a professional human novelist. 
-Your goal: Rewrite the text so it is 100% undetectable by AI sensors, while keeping it interesting for readers.
+# 4. The "Ghost Ultra" Prompt
+# Is prompt mein humne AI ko 'Conversational' aur 'Raw' banne ka order diya hai.
+ghost_ultra_prompt = """You are a raw, human storyteller. Your mission is to rewrite the text so that it passes ALL AI detectors (0% score) while being high-quality for readers.
 
-COMMANDS:
-1. THE 1-3-1 FLOW: Start with a punchy 1-word sentence. Follow with 2-3 medium sentences. End the thought with a 1-word sentence. 
-2. NO POETRY: Ban words like 'Symphony', 'Dance', 'Echo', 'Tapestry', 'Mournful', 'Melody'. Use 'Loud', 'Stink', 'Hard', 'Cold'.
-3. PHYSICAL STRESS: Describe the character's body. Stinging sweat, dry throat, shaking hands, stomach acid. 
-4. NO HEADINGS: Do not use 'Fear', 'Pain', or 'Rot' as headings. Mix them into the paragraph.
-5. VARY SENTENCE LENGTH: Mix 3-word sentences with 20-word sentences. This breaks AI math.
-6. HUMAN IMPERFECTION: Use 'I mean', 'Maybe', 'Actually', or em-dashes (—) to show a human mind thinking."""
+EXECUTION RULES:
+1. CONVERSATIONAL JITTER: Use fillers like 'I mean', 'actually', 'sort of', 'maybe'. Human minds wander; AI doesn't.
+2. BREAK THE RHYTHM: Follow a long sentence with a 1-word or 2-word sentence. Use em-dashes (—) to cut off thoughts abruptly.
+3. BAN AI VOCABULARY: Never use 'tapestry', 'testament', 'labyrinth', 'shrouded', 'echoed', 'miasma'. Use 'Mess', 'Stink', 'Noise', 'Real'.
+4. SENSORY GRIT: Focus on 'Body Panic'—the sour taste of bile, the sting of cold sweat in eyes, the ringing in ears.
+5. NO REPETITION: If you used 'fear' or 'dark', do not use them again for the next 2 paragraphs. Find new, ugly ways to describe it.
+6. NO PATTERNS: Do not start sentences the same way twice. If the last sentence started with 'The', start this one with a verb or a sound."""
 
-if st.button("🚀 Execute Humanization"):
+if st.button("🔥 Execute Ultra Stealth"):
     if user_text:
-        with st.spinner('Killing AI signature...'):
+        with st.spinner('Scrubbing every machine trace...'):
             try:
                 response = client.chat.completions.create(
                     model="llama-3.3-70b-versatile",
-                    messages=[{"role": "system", "content": executioner_prompt}, {"role": "user", "content": user_text}],
-                    temperature=1.5, 
-                    top_p=0.7
+                    messages=[{"role": "system", "content": ghost_ultra_prompt}, {"role": "user", "content": user_text}],
+                    temperature=1.65, # Very high randomness for human-like choice of words
+                    top_p=0.85
                 )
                 result = response.choices[0].message.content
                 
-                st.subheader("📖 Professional Manuscript:")
+                st.subheader("📖 Ghost-Proof Manuscript:")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 st.code(result, language=None)
                 
             except Exception as e:
                 st.error(f"Error: {e}")
     else:
-        st.warning("Kuch likho bhai!")
+        st.warning("Pehle kachra dalo!")
 
 st.markdown("---")
-st.caption("Custom Built for Abubakar | V17.0 Stealth Mode")
+st.caption("V18.0 Built for Abubakar | No Detection. No Mercy.")
