@@ -3,74 +3,68 @@ from groq import Groq
 import random
 
 # 1. Page Configuration
-st.set_page_config(page_title="Abubakar's Author Studio", page_icon="✍️", layout="wide")
+st.set_page_config(page_title="Abubakar's Chaos Studio V7", page_icon="🕵️", layout="wide")
 
-# CSS: Professional Author Theme
+# CSS: Dark Mode UI
 st.markdown("""
     <style>
-    .stTextArea textarea { font-size: 16px !important; color: #ffffff !important; background-color: #1a1a1a !important; }
+    .stTextArea textarea { font-size: 16px !important; color: #ffffff !important; background-color: #1e1e1e !important; }
     .result-box {
-        background-color: #fdfdfd; color: #1a1a1a; padding: 30px; border-radius: 8px;
-        border-left: 10px solid #2e7d32; font-family: 'Georgia', serif; white-space: pre-wrap;
-        margin-top: 15px; line-height: 1.8; font-size: 19px; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        background-color: #0e1117; color: #dcdcdc; padding: 25px; border-radius: 12px;
+        border: 2px solid #ff4b4b; font-family: 'Courier New', monospace; white-space: pre-wrap;
+        margin-top: 15px; line-height: 1.6;
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("📚 Abubakar's Author Studio (V6.0 - KDP Edition)")
-st.caption("Target: KDP Professional Quality | Mode: Deep Human Perspective")
+st.title("⚔️ Abubakar's Chaos Studio (V7.0 - Detection Killer)")
+st.caption("Mode: Messy Human Writing | Target: 0% AI Score")
 
 # 2. API Key Setup
 client = Groq(api_key="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")
 
 # 3. Input Area
-user_text = st.text_area("AI Text Yahan Paste Karein:", height=250, placeholder="Write your story draft here...")
+user_text = st.text_area("AI Text Yahan Paste Karo:", height=250, placeholder="Paste that 100% AI text here...")
 
-# 4. The "Professional Novelist" Prompt (Balanced for Books)
-# Ye prompt AI ko professional author banata hai jo human touch ke sath likhta hai
-author_stealth_prompt = """You are a world-class thriller novelist. 
-Rewrite the user's text to pass AI detection while maintaining high-quality professional literature standards for a book.
+# 4. The "Chaos & Messy" Prompt (Detector Killer)
+chaos_prompt = """You are a nervous, uneducated person writing a fast social media post or a messy first draft. 
+STRICT RULES TO DESTROY AI PATTERNS:
+1. NO PERFECT GRAMMAR: Start sentences with 'And', 'But', 'Cuz', or 'So'. Use '...' frequently.
+2. FRAGMENTED THOUGHTS: Use very short, 1-3 word sentences randomly. (Example: 'Dead silence. Scared.')
+3. TOTAL RANDOMNESS: One sentence must be long and rambling, the next must be tiny.
+4. NO 'AI' WORDS: Never use metaphors like 'shrouded', 'burning lungs', or 'heart thumping like a drum'. 
+5. USE FILLERS: Add words like 'honestly', 'basically', 'I mean', 'well'.
+6. BREAK THE THIRD PERSON: Occasionally use 'I' or 'Me' as if the narrator is talking to the reader.
+7. REWRITE EVERYTHING: Do not keep the original sentence structure. Break it apart."""
 
-STRICT INSTRUCTIONS:
-1. DEEP POINT OF VIEW: Describe what the character feels, smells, and hears. (e.g., instead of 'he was scared', use 'the hair on his neck stood up').
-2. VARY SENTENCE STRUCTURE: Mix short, punchy sentences with longer, flowing descriptions. This destroys AI's rhythmic pattern.
-3. NO REPETITION: Use synonyms. Never repeat the same key noun more than twice in a paragraph.
-4. HUMAN PACING: Use dashes (—) for sudden interruptions and ellipses (...) for trailing thoughts, but keep it professional.
-5. BAN AI SIGNATURES: No 'shrouded', 'testament', 'vibrant', 'delve', or 'interplay'. Use raw, strong English verbs.
-6. REAL DIALOGUE: If there is thought or speech, make it sound like a real person, not a robot.
-7. NO HEADINGS: Just pure, clean, book-ready paragraphs."""
-
-if st.button("📖 Generate Book-Ready Chapter"):
+if st.button("🔥 Destroy AI Detection"):
     if user_text:
-        with st.spinner('Crafting your masterpiece...'):
+        with st.spinner('Breaking the algorithm...'):
             try:
-                # Optimized parameters for high-quality storytelling
+                # Maximize randomness with high temperature and top_p
                 response = client.chat.completions.create(
                     model="llama-3.1-8b-instant",
                     messages=[
-                        {"role": "system", "content": author_stealth_prompt},
+                        {"role": "system", "content": chaos_prompt},
                         {"role": "user", "content": user_text}
                     ],
-                    temperature=1.1, # Slightly high for creativity
-                    top_p=0.9
+                    temperature=1.5, # Super high for maximum chaos
+                    top_p=0.95
                 )
                 
                 result = response.choices[0].message.content
                 
                 # Output Section
-                st.subheader("🖋️ Professional Book Content:")
+                st.subheader("✅ Humanized (Chaos Mode):")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 
-                st.write("📋 **Final Text for KDP:**")
+                st.write("📋 **Copy for KDP (Apply manual typos for 0% score):**")
                 st.code(result, language=None)
-                
-                st.success("Quality Checked. Patterns Broken. Ready for Publishing.")
                 
             except Exception as e:
                 st.error(f"Error: {e}")
     else:
-        st.warning("Bhai, draft toh paste karo!")
+        st.warning("Kuch likho toh sahi!")
 
 st.markdown("---")
-st.caption("Optimized for Amazon KDP & Draft2Digital | Created by Abubakar")
-
+st.caption("Developed by Abubakar | Chaos Edition V7")
