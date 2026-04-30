@@ -2,63 +2,61 @@ import streamlit as st
 from groq import Groq
 
 # 1. Page Config
-st.set_page_config(page_title="Abubakar's Gutter Stealth V16", page_icon="☢️", layout="wide")
+st.set_page_config(page_title="Abubakar's V17 Final Kill", page_icon="🎯", layout="wide")
 
-# CSS: Raw & Edgy Interface
+# CSS: Dark Ghost Interface
 st.markdown("""
     <style>
-    .stTextArea textarea { font-size: 18px !important; color: #ffffff !important; background-color: #000000 !important; border: 2px solid #ff0000; }
+    .stTextArea textarea { font-size: 18px !important; color: #ffffff !important; background-color: #111111 !important; border: 2px solid #333; }
     .result-box {
-        background-color: #fdfdfd; color: #000000; padding: 45px; border-radius: 0px;
-        border-left: 20px solid #ff0000; font-family: 'Arial', sans-serif; white-space: pre-wrap;
-        line-height: 1.6; font-size: 22px; 
+        background-color: #fcfcfc; color: #111111; padding: 45px; border-radius: 5px;
+        border-left: 15px solid #000000; font-family: 'Georgia', serif; white-space: pre-wrap;
+        line-height: 1.8; font-size: 21px; 
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("☢️ Gutter Stealth V16.0 (The Nuclear Option)")
-st.caption("Strategy: Zero Poetry | Ugly Realism | Broken Math")
+st.title("🎯 V17.0 The Final Kill (Zero-AI Signature)")
+st.caption("Strategy: Dynamic Rhythm | Sensory Grit | No Robot Words")
 
 # 2. API Key
 client = Groq(api_key="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")
 
 # 3. Input
-user_text = st.text_area("Paste AI Garbage Here:", height=200)
+user_text = st.text_area("Original AI Text Dalein:", height=200)
 
-# 4. The "Anti-Poet" Master Prompt
-# Is bar humne AI ko bad-tameez novelist banaya hai.
-gutter_prompt = """You are a gritty, raw horror writer. 
-Your goal: Rewrite this text to pass a 0% AI score. 
+# 4. The "Executioner" Prompt
+executioner_prompt = """You are a professional human novelist. 
+Your goal: Rewrite the text so it is 100% undetectable by AI sensors, while keeping it interesting for readers.
 
-RULES OF DESTRUCTION:
-1. BAN ALL BEAUTY: Delete words like 'serenade', 'melody', 'miasma', 'crystalline', 'recoil', 'fragile'. These are AI death-words. Use 'Stink', 'Noise', 'Rot', 'Cold', 'Hard'.
-2. STOP THE REPETITION: If you mentioned 'heart' once, don't mention it again for 5 sentences. 
-3. THE 5-WORD LIMIT: Every third sentence MUST be under 5 words.
-4. UGLY SENSATIONS: Describe the sour taste of vomit in the throat, the wet sound of a shoe on rot, or the stinging itch of a bug bite. 
-5. NO HEADINGS: Do not use words like 'Fear', 'Frostbite', or 'Blood' as headings. Just tell the story.
-6. NO TRANSITIONS: Don't use 'As', 'When', 'While'. Just give the action. 
-   - Example: 'He walked. The floor broke. He fell.'"""
+COMMANDS:
+1. THE 1-3-1 FLOW: Start with a punchy 1-word sentence. Follow with 2-3 medium sentences. End the thought with a 1-word sentence. 
+2. NO POETRY: Ban words like 'Symphony', 'Dance', 'Echo', 'Tapestry', 'Mournful', 'Melody'. Use 'Loud', 'Stink', 'Hard', 'Cold'.
+3. PHYSICAL STRESS: Describe the character's body. Stinging sweat, dry throat, shaking hands, stomach acid. 
+4. NO HEADINGS: Do not use 'Fear', 'Pain', or 'Rot' as headings. Mix them into the paragraph.
+5. VARY SENTENCE LENGTH: Mix 3-word sentences with 20-word sentences. This breaks AI math.
+6. HUMAN IMPERFECTION: Use 'I mean', 'Maybe', 'Actually', or em-dashes (—) to show a human mind thinking."""
 
-if st.button("☢️ Nuke the AI Pattern"):
+if st.button("🚀 Execute Humanization"):
     if user_text:
-        with st.spinner('Stripping the AI soul...'):
+        with st.spinner('Killing AI signature...'):
             try:
                 response = client.chat.completions.create(
                     model="llama-3.3-70b-versatile",
-                    messages=[{"role": "system", "content": gutter_prompt}, {"role": "user", "content": user_text}],
-                    temperature=1.6, # Max chaos
-                    top_p=0.6 # Focus on raw words
+                    messages=[{"role": "system", "content": executioner_prompt}, {"role": "user", "content": user_text}],
+                    temperature=1.5, 
+                    top_p=0.7
                 )
                 result = response.choices[0].message.content
                 
-                st.subheader("📖 Raw Manuscript:")
+                st.subheader("📖 Professional Manuscript:")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 st.code(result, language=None)
                 
             except Exception as e:
                 st.error(f"Error: {e}")
     else:
-        st.warning("Pehle kachra dalo!")
+        st.warning("Kuch likho bhai!")
 
 st.markdown("---")
-st.caption("V16.0 Optimized | Designed for Abubakar to win the KDP War.")
+st.caption("Custom Built for Abubakar | V17.0 Stealth Mode")
