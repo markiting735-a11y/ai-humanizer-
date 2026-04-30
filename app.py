@@ -16,8 +16,8 @@ st.markdown("""
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🎬 Abubakar's Cinema Studio (V10.0 - Premium Quality)")
-st.caption("Mode: Cinematic Storytelling | Anti-AI Math Logic")
+st.title("🎬 Abubakar's Cinema Studio (V10.1 - FIXED)")
+st.caption("Mode: Cinematic Storytelling | Model: Llama-3.3-70b (Latest)")
 
 # 2. API Key
 client = Groq(api_key="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")
@@ -26,23 +26,23 @@ client = Groq(api_key="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"
 user_text = st.text_area("Original Story Draft Yahan Dalein:", height=200)
 
 # 4. The "Cinematic Human" Prompt
-cinema_prompt = """You are a high-end thriller novelist like Stephen King. 
+cinema_prompt = """You are a high-end thriller novelist. 
 Rewrite the text to be professional, gripping, and 100% human-passing.
 
 RULES TO BEAT DETECTORS & WIN READERS:
-1. NO CLICHES: Don't say 'he was terrified'. Describe his heartbeat hitting his teeth. 
-2. VARY RHYTHM: Use short, punchy action lines followed by one long, flowing sensory description. 
-3. HUMAN GRIT: Use words that feel heavy or sharp (e.g., 'grime', 'slick', 'stabbing', 'hollow'). 
-4. NO 'AI' CONNECTORS: Never use 'Suddenly', 'However', 'Moreover'. Just jump into the action.
-5. DEEP POV: Stay inside the character's head. If he's scared, the whole world should look distorted.
-6. THE 'GLITCH': Use em-dashes (—) and fragments. It breaks the AI's mathematical flow."""
+1. NO CLICHES: Describe physical sensations instead of naming emotions. 
+2. VARY RHYTHM: Mix short, punchy action lines with long, sensory descriptions. 
+3. NO 'AI' CONNECTORS: Never use 'Suddenly', 'However', 'Moreover'. 
+4. DEEP POV: Stay inside the character's head. Make the world feel heavy and real.
+5. THE 'GLITCH': Use em-dashes (—) and fragments to break the AI's mathematical flow."""
 
 if st.button("🔥 Create Masterpiece"):
     if user_text:
         with st.spinner('Writing like a pro...'):
             try:
+                # UPDATED MODEL NAME HERE
                 response = client.chat.completions.create(
-                    model="llama-3.1-70b-versatile", # Using a bigger model for better quality
+                    model="llama-3.3-70b-versatile", 
                     messages=[{"role": "system", "content": cinema_prompt}, {"role": "user", "content": user_text}],
                     temperature=1.2,
                     top_p=0.9
@@ -55,3 +55,4 @@ if st.button("🔥 Create Masterpiece"):
                 
             except Exception as e:
                 st.error(f"Error: {e}")
+                
