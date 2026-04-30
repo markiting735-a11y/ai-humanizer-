@@ -2,63 +2,60 @@ import streamlit as st
 from groq import Groq
 
 # 1. Page Config
-st.set_page_config(page_title="Abubakar's Ghost-Writer Elite", page_icon="🕵️", layout="wide")
+st.set_page_config(page_title="Abubakar's Rhythm Breaker", page_icon="⚡", layout="wide")
 
-# CSS: Dark Premium Interface
+# CSS: Professional Midnight Theme
 st.markdown("""
     <style>
-    .stTextArea textarea { font-size: 17px !important; color: #e0e0e0 !important; background-color: #121212 !important; border: 1px solid #444; }
+    .stTextArea textarea { font-size: 17px !important; color: #e0e0e0 !important; background-color: #1a1a1a !important; }
     .result-box {
-        background-color: #ffffff; color: #1a1a1a; padding: 40px; border-radius: 2px;
-        border-left: 12px solid #1a1a1a; font-family: 'Georgia', serif; white-space: pre-wrap;
-        line-height: 1.9; font-size: 20px; box-shadow: 15px 15px 0px #eeeeee;
+        background-color: #ffffff; color: #111111; padding: 40px; border-radius: 4px;
+        border-left: 10px solid #ff4b4b; font-family: 'Georgia', serif; white-space: pre-wrap;
+        line-height: 1.8; font-size: 20px; box-shadow: 10px 10px 30px rgba(0,0,0,0.1);
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🕵️ Ghost-Writer Elite (V11.1)")
-st.caption("Status: Undetectable | Style: Professional Thriller | Model: Llama 3.3 70B")
+st.title("⚡ Rhythm Breaker V12.0 (The AI Killer)")
+st.caption("Strategy: Variable Sentence Length + Sensory Overload")
 
 # 2. API Key
 client = Groq(api_key="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")
 
-# 3. Input Area
-user_text = st.text_area("Original Story Draft (Raw Content):", height=200, placeholder="Enter your story beats here...")
+# 3. Input
+user_text = st.text_area("Original Content Yahan Dalein:", height=200)
 
-# 4. The "Anti-AI" Master Prompt
-master_prompt = """You are a world-class ghostwriter. Rewrite the input text to pass 100% human detection. 
+# 4. The "Variable Rhythm" Prompt
+rhythm_prompt = """You are a professional human novelist. Rewrite the user text to be 100% human-passing.
 
-STRICT GUIDELINES TO KILL AI DETECTION:
-1. KILL THE FLOW: Use fragments. Short bursts of action. (e.g., 'Cold. Dark. Then, a scream.')
-2. SENSORY VOMIT: Focus on physical panic. (Sweat, metallic taste, ringing ears, chest pain).
-3. NO 'AI' WORDS: Ban words like 'enveloped', 'shrouded', 'reverberated', 'palpable', 'testament'. Use 'Heavy', 'Loud', 'Felt like'.
-4. EXTREME BURSTINESS: Follow a 40-word sentence with a 1-word sentence. 
-5. NO CONNECTORS: Remove 'However', 'Therefore', 'Suddenly'. 
-6. THE 'HUMAN GLITCH': Use em-dashes (—) and ellipses (...) to show thinking gaps."""
+STRICT RHYTHM RULES:
+1. THE 10-16-6 RULE: Constantly change sentence length. Write one long, descriptive sentence (20+ words), then a medium one (10-12 words), then a very short, punchy one (2-4 words). 
+2. SENSORY DETAILS: Don't tell me he's scared. Tell me about the metallic taste of blood in his mouth or the way his shirt is sticking to his sweaty back.
+3. WORDS TO BAN: Kill all AI favorites: 'Suddenly', 'However', 'Moreover', 'Enveloped', 'Shrouded', 'Testament', 'Coalesced'.
+4. HUMAN DIALECT: Use words like 'Maybe', 'Actually', 'I mean', 'Sort of' to sound like a human thinking.
+5. NO REPETITION: Use 'The beam' then 'The flickering light' then 'The yellow glow'. 
+6. THE HOOK: Make the atmosphere heavy and professional, but keep the structure unpredictable."""
 
-if st.button("🚀 Transform to Human Masterpiece"):
+if st.button("🔥 Generate Undetectable Chapter"):
     if user_text:
-        with st.spinner('Stripping AI Signatures...'):
+        with st.spinner('Breaking the AI Pattern...'):
             try:
                 response = client.chat.completions.create(
-                    model="llama-3.3-70b-versatile",
-                    messages=[{"role": "system", "content": master_prompt}, {"role": "user", "content": user_text}],
-                    temperature=1.25, 
-                    top_p=0.85
+                    model="llama-3.3-70b-versatile", 
+                    messages=[{"role": "system", "content": rhythm_prompt}, {"role": "user", "content": user_text}],
+                    temperature=1.3, # Maximum unpredictability
+                    top_p=0.9
                 )
                 result = response.choices[0].message.content
                 
-                st.subheader("📖 Final Human-Grade Manuscript:")
-                # FIXED: Change unsafe_allow_True to unsafe_allow_html
+                st.subheader("📖 Professional Manuscript (0% AI Potential):")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
-                
-                st.write("📋 **Raw Text for KDP:**")
                 st.code(result, language=None)
                 
             except Exception as e:
                 st.error(f"Error: {e}")
     else:
-        st.warning("Pehle kuch likho toh sahi!")
+        st.warning("Pehle text toh dalo!")
 
 st.markdown("---")
-st.caption("Built for Abubakar | Optimized for Zero-AI Detection.")
+st.caption("Optimized for KDP | Strategy by Abubakar")
