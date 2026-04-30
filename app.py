@@ -1,58 +1,57 @@
 import streamlit as st
 from groq import Groq
-import random
 
 # 1. Page Config
-st.set_page_config(page_title="Abubakar's Ghostwriter V8", page_icon="🖋️", layout="wide")
+st.set_page_config(page_title="Abubakar's Cinema Studio", page_icon="🎬", layout="wide")
 
-# CSS: Book Editor Theme
+# CSS: Professional Midnight Theme
 st.markdown("""
     <style>
     .stTextArea textarea { font-size: 16px !important; color: #ffffff !important; background-color: #1a1a1a !important; }
     .result-box {
-        background-color: #ffffff; color: #1a1a1a; padding: 35px; border-radius: 5px;
-        border: 1px solid #ccc; font-family: 'Georgia', serif; white-space: pre-wrap;
-        line-height: 1.8; font-size: 18px; box-shadow: 10px 10px 0px #2e7d32;
+        background-color: #f9f9f9; color: #111111; padding: 35px; border-radius: 5px;
+        border-left: 8px solid #d32f2f; font-family: 'Georgia', serif; white-space: pre-wrap;
+        line-height: 1.8; font-size: 19px; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
     }
     </style>
     """, unsafe_allow_html=True)
 
-st.title("🖋️ Abubakar's Ghostwriter (V8.0 - Professional Stealth)")
-st.caption("Focus: High Burstiness & Low Predictability | KDP Optimized")
+st.title("🎬 Abubakar's Cinema Studio (V10.0 - Premium Quality)")
+st.caption("Mode: Cinematic Storytelling | Anti-AI Math Logic")
 
 # 2. API Key
 client = Groq(api_key="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")
 
 # 3. Input
-user_text = st.text_area("Original AI Text Yahan Dalein:", height=200)
+user_text = st.text_area("Original Story Draft Yahan Dalein:", height=200)
 
-# 4. The "Ghostwriter" Prompt (Mixing Perplexity & Burstiness)
-ghost_prompt = """You are a professional human novelist. Rewrite the user text to be 100% human-passing.
-CRITICAL RULES:
-1. MAXIMIZE BURSTINESS: Mix extremely short sentences (2-4 words) with very long, descriptive ones (25+ words). 
-2. HIGH PERPLEXITY: Use unexpected word choices. Instead of 'he was scared', use 'his pulse thrashed'. Avoid common AI transition words (However, Therefore, Moreover).
-3. SENSORY DEPTH: Focus on visceral human reactions—cold sweat, dry mouth, the itch on the skin. 
-4. BREAK THE RHYTHM: Use em-dashes (—) and ellipses (...) to interrupt thoughts mid-sentence. 
-5. NO REPETITION: If you mention a 'flashlight' once, call it 'the beam' or 'the plastic torch' the next time. 
-6. PROFESSIONAL BUT RAW: Keep it high quality for a book, but make the flow unpredictable like a real human's thoughts."""
+# 4. The "Cinematic Human" Prompt
+cinema_prompt = """You are a high-end thriller novelist like Stephen King. 
+Rewrite the text to be professional, gripping, and 100% human-passing.
 
-if st.button("✨ Humanize & Polish"):
+RULES TO BEAT DETECTORS & WIN READERS:
+1. NO CLICHES: Don't say 'he was terrified'. Describe his heartbeat hitting his teeth. 
+2. VARY RHYTHM: Use short, punchy action lines followed by one long, flowing sensory description. 
+3. HUMAN GRIT: Use words that feel heavy or sharp (e.g., 'grime', 'slick', 'stabbing', 'hollow'). 
+4. NO 'AI' CONNECTORS: Never use 'Suddenly', 'However', 'Moreover'. Just jump into the action.
+5. DEEP POV: Stay inside the character's head. If he's scared, the whole world should look distorted.
+6. THE 'GLITCH': Use em-dashes (—) and fragments. It breaks the AI's mathematical flow."""
+
+if st.button("🔥 Create Masterpiece"):
     if user_text:
-        with st.spinner('Applying Human Texture...'):
+        with st.spinner('Writing like a pro...'):
             try:
-                # High temp for high perplexity (unpredictability)
                 response = client.chat.completions.create(
-                    model="llama-3.1-8b-instant",
-                    messages=[{"role": "system", "content": ghost_prompt}, {"role": "user", "content": user_text}],
-                    temperature=1.35,
+                    model="llama-3.1-70b-versatile", # Using a bigger model for better quality
+                    messages=[{"role": "system", "content": cinema_prompt}, {"role": "user", "content": user_text}],
+                    temperature=1.2,
                     top_p=0.9
                 )
                 result = response.choices[0].message.content
                 
-                st.subheader("📖 Professional Book Result:")
+                st.subheader("📖 Book-Ready Content:")
                 st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
                 st.code(result, language=None)
                 
             except Exception as e:
                 st.error(f"Error: {e}")
-                
